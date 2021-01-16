@@ -20,6 +20,6 @@ public class SearchController {
     @GetMapping("/movies")
     public List<Movie> getMoviesByQuery(@RequestParam(name = "q") String query){
 
-        return movieService.query(query);
+        return movieService.search(query);
     }
 }
