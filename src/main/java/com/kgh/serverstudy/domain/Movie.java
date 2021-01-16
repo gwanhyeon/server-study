@@ -13,6 +13,6 @@ public class Movie implements Serializable {
 
     private String link;
 
-    private float userRanking;
+    private float userRating;
 
 }
