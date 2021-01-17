@@ -1,4 +1,4 @@
-package com.kgh.serverstudy.domain;
+package com.kgh.serverstudy.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
