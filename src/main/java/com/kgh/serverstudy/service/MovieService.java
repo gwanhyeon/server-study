@@ -1,7 +1,7 @@
 package com.kgh.serverstudy.service;
 
-import com.kgh.serverstudy.Repository.MovieRepository;
-import com.kgh.serverstudy.domain.Movie;
+import com.kgh.serverstudy.domain.dto.Movie;
+import com.kgh.serverstudy.domain.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
