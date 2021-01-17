@@ -45,7 +45,5 @@ public class MovieRepositoryImpl implements MovieRepository {
                         .userRating(m.getUserRating())
                         .build())
                 .collect(Collectors.toList());
-
     }
-
 }
