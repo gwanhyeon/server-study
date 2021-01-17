@@ -1,6 +1,6 @@
 package com.kgh.serverstudy.controller;
 
-import com.kgh.serverstudy.domain.Movie;
+import com.kgh.serverstudy.domain.dto.Movie;
 import com.kgh.serverstudy.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,19 +1,15 @@
-package com.kgh.serverstudy.Repository;
+package com.kgh.serverstudy.domain.repository;
 
 import com.kgh.serverstudy.config.NaverProperties;
-import com.kgh.serverstudy.domain.Movie;
-import com.kgh.serverstudy.domain.ResponseMovie;
+import com.kgh.serverstudy.domain.dto.Movie;
+import com.kgh.serverstudy.domain.dto.ResponseMovie;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-
 import java.util.stream.Collectors;
 
 @Component
