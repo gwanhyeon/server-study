@@ -17,10 +17,8 @@ public class MovieService {
     public MovieService(MovieRepository movieRepository){
         this.movieRepository = movieRepository;
     }
-    public List<ResponseMovie.Item> search(final String query){
-        MovieGroup movieGroup = new MovieGroup(movieRepository.findByQuery(query));
-        return movieGroup.getListOrderRating();
-//        return movieRepository.findByQuery(query);
+    public ResponseMovie.MovieDto search(final String query){
+        return movieRepository.findByQuery(query);
     }
 
     //로컬 임시 테스트

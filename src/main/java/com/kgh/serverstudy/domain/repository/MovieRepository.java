@@ -4,5 +4,5 @@ import com.kgh.serverstudy.domain.dto.ResponseMovie;
 import java.util.List;
 
 public interface MovieRepository {
-    List<ResponseMovie.Item> findByQuery(String query);
+    ResponseMovie.MovieDto findByQuery(String query);
 }

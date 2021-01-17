@@ -19,7 +19,7 @@ public class SearchController {
     private MovieService movieService;
 
     @GetMapping("/movies")
-    public List<ResponseMovie.Item> getMoviesByQuery(@RequestParam(name = "q") String query){
+    public ResponseMovie.MovieDto getMoviesByQuery(@RequestParam(name = "q") String query){
         return movieService.search(query);
     }
 }
