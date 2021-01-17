@@ -23,5 +23,4 @@ public class HttpClientConfig {
         factory.setReadTimeout(5000);
         return new RestTemplate(factory);
     }
-
 }

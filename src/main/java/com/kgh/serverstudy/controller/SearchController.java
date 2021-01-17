@@ -1,6 +1,7 @@
 package com.kgh.serverstudy.controller;
 
 import com.kgh.serverstudy.domain.dto.Movie;
+import com.kgh.serverstudy.domain.dto.ResponseMovie;
 import com.kgh.serverstudy.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,7 @@ public class SearchController {
     private MovieService movieService;
 
     @GetMapping("/movies")
-    public List<Movie> getMoviesByQuery(@RequestParam(name = "q") String query){
-
+    public ResponseMovie.MovieDto getMoviesByQuery(@RequestParam(name = "q") String query){
         return movieService.search(query);
     }
 }

@@ -1,6 +1,8 @@
 package com.kgh.serverstudy.service;
 
 import com.kgh.serverstudy.domain.dto.Movie;
+import com.kgh.serverstudy.domain.dto.MovieGroup;
+import com.kgh.serverstudy.domain.dto.ResponseMovie;
 import com.kgh.serverstudy.domain.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,11 @@ public class MovieService {
     public MovieService(MovieRepository movieRepository){
         this.movieRepository = movieRepository;
     }
-    public List<Movie> search(final String query){
+    public ResponseMovie.MovieDto search(final String query){
         return movieRepository.findByQuery(query);
     }
 
-    // 로컬 임시 테스트
+    //로컬 임시 테스트
     public List<Movie> query(final String query){
         return Arrays.asList(
                 Movie.builder().title("Movie-1").link("http://link").build(),

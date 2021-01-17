@@ -1,7 +1,8 @@
 package com.kgh.serverstudy.domain.repository;
-import com.kgh.serverstudy.domain.dto.Movie;
+import com.kgh.serverstudy.domain.dto.ResponseMovie;
+
 import java.util.List;
 
 public interface MovieRepository {
-    List<Movie> findByQuery(String query);
+    ResponseMovie.MovieDto findByQuery(String query);
 }
