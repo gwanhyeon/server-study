@@ -30,8 +30,7 @@ public class ResponseMovie {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class MovieDto {
-        private DateFormat lastBuilderDate;
-//        private LocalDate lastBuilderDate;
+        private String lastBuildDate;
         private Long total;
         private Long start;
         private Long display;
@@ -42,7 +41,7 @@ public class ResponseMovie {
             return ResponseMovie.MovieDto.builder()
                     .display(exchange.getBody().getDisplay())
                     .start(exchange.getBody().getStart())
-                    .lastBuilderDate(exchange.getBody().getLastBuilderDate())
+                    .lastBuildDate(exchange.getBody().getLastBuildDate())
                     .total(exchange.getBody().getTotal())
                     .items(listOrderRating)
                     .build();

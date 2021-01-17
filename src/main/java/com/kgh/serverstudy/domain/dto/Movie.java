@@ -4,8 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 @Builder
 @Getter
