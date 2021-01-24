@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface MovieRepository {
     ResponseMovie.MovieDto findByQuery(String query);
+    ResponseMovie.MovieDto findByOrderQuery(String query);
 }

@@ -33,8 +33,6 @@ public class NewsRepositoryImpl implements NewsRepository {
         String url = naverProperties.getNewsUrl() + "?query="+query;
         ResponseEntity<News.NewsDto> exchange = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(httpHeaders), News.NewsDto.class);
         List<News.Item> newItemList = News.Item.of(exchange);
-        News.NewsDto newsDto = News.NewsDto.of(exchange,newItemList);
-
-        return newsDto;
+        return News.NewsDto.of(exchange,newItemList);
     }
 }

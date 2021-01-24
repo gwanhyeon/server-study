@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 //@SpringBootConfiguration
 //@EnableAutoConfiguration -> 동작을 하는 이유다. Tomcat
 public class ServerStudyApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ServerStudyApplication.class, args);
     }
