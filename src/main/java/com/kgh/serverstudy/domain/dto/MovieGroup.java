@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class MovieGroup {
     private final List<ResponseMovie.Item> list;
-    private final static int AVG_TOP_NUM = 2;
+
 
     public MovieGroup(final List<ResponseMovie.Item> list) {
         this.list = list;
@@ -28,7 +28,7 @@ public class MovieGroup {
 
     public OptionalDouble calAvgUserRating(){
         return getListOrderRating().stream()
-                .limit(AVG_TOP_NUM)
+                .limit(2)
                 .mapToDouble(ResponseMovie.Item::getUserRating)
                 .average();
     }
