@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class MovieRepositoryImpl implements MovieRepository {
+public
+class MovieRepositoryImpl implements MovieRepository {
 
     private final RestTemplate restTemplate;
     private final NaverProperties naverProperties;
 
-    public MovieRepositoryImpl(RestTemplate restTemplate, NaverProperties naverProperties) {
+    public MovieRepositoryImpl(NaverProperties naverProperties, RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
         this.naverProperties = naverProperties;
     }
@@ -36,6 +37,19 @@ public class MovieRepositoryImpl implements MovieRepository {
         MovieGroup items = new MovieGroup(ResponseMovieList);
         List<ResponseMovie.Item> listOrderRating = items.getListOrderRating();
         ResponseMovie.MovieDto MovieDtoList = ResponseMovie.MovieDto.of(exchange, listOrderRating);
+        return MovieDtoList;
+    }
+
+    public ResponseMovie.MovieDto findByOrderQuery(final String query) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("X-Naver-Client-Id", naverProperties.getClientId());
+        httpHeaders.add("X-Naver-Client-Secret", naverProperties.getClientSecret());
+
+        String url = naverProperties.getMovieUrl() + "?query=" + query;
+        ResponseEntity<ResponseMovie.MovieDto> exchange = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity(httpHeaders), ResponseMovie.MovieDto.class);
+
+        List<ResponseMovie.Item> ResponseMovieList = ResponseMovie.Item.of(exchange);
+        ResponseMovie.MovieDto MovieDtoList = ResponseMovie.MovieDto.of(exchange, ResponseMovieList);
         return MovieDtoList;
     }
 }

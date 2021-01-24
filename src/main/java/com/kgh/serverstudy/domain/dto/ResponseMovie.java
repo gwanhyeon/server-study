@@ -1,11 +1,13 @@
 package com.kgh.serverstudy.domain.dto;
 
+import com.kgh.serverstudy.config.strUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class ResponseMovie {
     private List<Item> items;
     private MovieDto movieDto;
+    private strUtils strUtils = new strUtils();
 
     @Getter
     @Builder
@@ -63,13 +66,18 @@ public class ResponseMovie {
         private float userRating;
         // todo field Adding
 
+
+        public String getTitle() {
+            return deleteTagB(title);
+        }
+
         public static List<ResponseMovie.Item> of(ResponseEntity<MovieDto> exchange) {
             return exchange
                     .getBody()
                     .getItems()
                     .stream()
                     .map(m -> ResponseMovie.Item.builder()
-                            .title(m.getTitle())
+                            .title(deleteTagB(m.getTitle()))
                             .link(m.getLink())
                             .image(m.getImage())
                             .director(m.getDirector())
@@ -79,6 +87,12 @@ public class ResponseMovie {
                             .actor(m.getActor())
                             .build())
                     .collect(Collectors.toList());
+        }
+        static String deleteTagB(String str){
+            String resultStr = str;
+            resultStr = StringUtils.replace(resultStr, "<b>", "");
+            resultStr = StringUtils.replace(resultStr, "</b>", "");
+            return resultStr;
         }
     }
 }
