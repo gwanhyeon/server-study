@@ -14,4 +14,5 @@ public class NaverProperties {
     private String newsUrl;
     private String clientId;
     private String clientSecret;
+    private String url;
 }

@@ -1,0 +1,15 @@
+resttemplate:
+    config:
+        maxconntotal : 50
+        maxconnperroute: 10
+        conntimeout: 3000
+        readtimeout: 5000
+# Tomcat Thread max size config
+# server:
+#    tomcat:
+#        threads:
+#            max: 200
+#    address:
+#    port: 8002
+
+---
