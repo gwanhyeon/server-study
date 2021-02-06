@@ -17,8 +17,18 @@ configurations {
 repositories {
     mavenCentral()
 }
+ext{
+    springCloudVersion = '2020.0.1'
+    //https://spring.io/projects/spring-cloud#learn 버전
+}
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
 dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.apache.httpcomponents:httpclient:4.5'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
