@@ -1,34 +1,34 @@
 package com.kgh.serverstudy.domain.repository.Feign;
 
-import com.kgh.serverstudy.Exception.ExceptionMessage;
-import com.kgh.serverstudy.Exception.OpenApiRuntimeException;
+import com.kgh.serverstudy.config.AbstractCustomCache;
 import com.kgh.serverstudy.config.NaverProperties;
+import com.kgh.serverstudy.config.PerformanceTimeRecord;
 import com.kgh.serverstudy.domain.dto.Movie;
 import com.kgh.serverstudy.domain.dto.MovieGroup;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @Component
 @Configuration
 @EnableConfigurationProperties({NaverProperties.class})
-public class FeignMovieRepositoryImpl implements FeignMovieRepository {
+public class FeignMovieRepositoryImpl extends AbstractCustomCache implements FeignMovieRepository {
 
-    private final Map<String, Movie.MovieDto> movieMapCache = new HashMap<>();
+    private final ConcurrentHashMap<String, Movie.MovieDto> movieMapCache = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Movie.MovieDto> store;
     private volatile Long cacheLoadTime = 0L;
     private volatile Long cacheTimeLimit = 600 * 1000L;
 
+    public FeignMovieRepositoryImpl(ConcurrentMap<String, Movie.MovieDto> store) {
+        this.store = store;
+    }
 
     /**
      * 영화 쿼리 조회
@@ -37,6 +37,7 @@ public class FeignMovieRepositoryImpl implements FeignMovieRepository {
      * @return
      */
     @Override
+    @PerformanceTimeRecord
     public Movie.MovieDto findByQuery(Movie.MovieDto exchange, String query) {
 
         List<Movie.Item> ResponseMovieList = Movie.Item.feignOf(exchange);
@@ -46,11 +47,12 @@ public class FeignMovieRepositoryImpl implements FeignMovieRepository {
     }
 
     /**
-     * 영화 캐시 조
+     * 영화 캐시 조회
      * @param query
      * @return
      */
     @Override
+    @PerformanceTimeRecord
     public Map<String, Movie.MovieDto> findCacheByQuery(Movie.MovieDto exchange, String query) {
         long nowTime = System.currentTimeMillis();
         if(CollectionUtils.isEmpty(movieMapCache) || nowTime - cacheLoadTime > cacheTimeLimit){
@@ -72,6 +74,8 @@ public class FeignMovieRepositoryImpl implements FeignMovieRepository {
      * @param query
      * @return
      */
+    @Override
+    @PerformanceTimeRecord
     public Map<String, Movie.MovieDto> saveCacheByQuery(Movie.MovieDto exchange, String query) {
         long nowTime = System.currentTimeMillis();
         if(!CollectionUtils.isEmpty(movieMapCache) || nowTime - cacheLoadTime < cacheTimeLimit){
@@ -101,9 +105,31 @@ public class FeignMovieRepositoryImpl implements FeignMovieRepository {
      * @param query
      * @return
      */
+    @PerformanceTimeRecord
     public Movie.MovieDto findByOrderQuery(Movie.MovieDto exchange, String query) {
         List<Movie.Item> ResponseMovieList = Movie.Item.feignOf(exchange);
         Movie.MovieDto MovieDtoList = Movie.MovieDto.feignOf(exchange, ResponseMovieList);
         return MovieDtoList;
+    }
+
+    @Override
+    protected Optional<Object> lookup(Object key) {
+        return Optional.ofNullable(this.store.get(key));
+    }
+
+    @Override
+    public boolean put(String key, Movie.MovieDto value) {
+        this.store.put(key, value);
+        return true;
+    }
+
+    @Override
+    public void evict(Object key) {
+
+    }
+
+    @Override
+    public void clear() {
+
     }
 }

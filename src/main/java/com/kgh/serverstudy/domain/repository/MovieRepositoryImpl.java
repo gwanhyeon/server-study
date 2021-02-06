@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public
@@ -23,7 +24,7 @@ class MovieRepositoryImpl implements MovieRepository {
 
     private final RestTemplate restTemplate;
     private final NaverProperties naverProperties;
-    private final Map<String, Movie.MovieDto> movieMapCache = new HashMap<>();
+    private final ConcurrentHashMap<String, Movie.MovieDto> movieMapCache = new ConcurrentHashMap<>(16);
     private volatile Long cacheLoadTime = 0L;
     private volatile Long cacheTimeLimit = 600 * 1000L;
     public MovieRepositoryImpl(NaverProperties naverProperties, RestTemplate restTemplate) {
@@ -45,7 +46,7 @@ class MovieRepositoryImpl implements MovieRepository {
     }
 
     /**
-     * 영화 캐시 조
+     * 영화 캐시 조회
      * @param query
      * @return
      */
