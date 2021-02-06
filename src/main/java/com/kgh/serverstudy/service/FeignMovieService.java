@@ -2,9 +2,15 @@ package com.kgh.serverstudy.service;
 
 import com.kgh.serverstudy.Exception.ExceptionMessage;
 import com.kgh.serverstudy.Exception.InvalidRequestException;
-import com.kgh.serverstudy.domain.dto.MovieGroup;
+import com.kgh.serverstudy.config.FeignClientConfig;
+import com.kgh.serverstudy.config.NaverProperties;
 import com.kgh.serverstudy.domain.dto.Movie;
+import com.kgh.serverstudy.domain.dto.MovieGroup;
+import com.kgh.serverstudy.domain.repository.Feign.FeignMovieRepository;
 import com.kgh.serverstudy.domain.repository.MovieRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -13,18 +19,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class MovieService {
+@Configuration
+@EnableConfigurationProperties({NaverProperties.class})
+@RequiredArgsConstructor
+public class FeignMovieService {
 
-    private final MovieRepository movieRepository;
-    public MovieService(MovieRepository movieRepository){
-        this.movieRepository = movieRepository;
-    }
+    private final NaverProperties naverProperties;
+    private final FeignClientConfig feignClientConfig;
+    private final FeignMovieRepository feignMovieRepository;
+
     // 영화 데이터 조회(캐싱X)
     public Movie.MovieDto findByQuery(final String query){
         if(StringUtils.isEmpty(query)){
             throw new InvalidRequestException(ExceptionMessage.INVALID_REQUEST_QUERY_EMPTY_EXCEPTION);
         }
-        return movieRepository.findByQuery(query);
+        Movie.MovieDto moviesByQuery = feignClientConfig.getFeignMoviesByQuery(naverProperties.getClientId(), naverProperties.getClientSecret(), query);
+        return feignMovieRepository.findByQuery(moviesByQuery,query);
     }
     /**
      * 영화 데이터 조회(캐싱)
@@ -36,7 +46,8 @@ public class MovieService {
         if(StringUtils.isEmpty(query)){
             throw new InvalidRequestException(ExceptionMessage.INVALID_REQUEST_QUERY_EMPTY_EXCEPTION);
         }
-        return movieRepository.findCacheByQuery(query);
+        Movie.MovieDto moviesByQuery = feignClientConfig.getFeignMoviesByQuery(naverProperties.getClientId(), naverProperties.getClientSecret(), query);
+        return feignMovieRepository.findCacheByQuery(moviesByQuery, query);
     }
 
     /**
@@ -48,7 +59,8 @@ public class MovieService {
         if(StringUtils.isEmpty(query)){
             throw new InvalidRequestException(ExceptionMessage.INVALID_REQUEST_QUERY_EMPTY_EXCEPTION);
         }
-        return movieRepository.saveCacheByQuery(query);
+        Movie.MovieDto moviesByQuery = feignClientConfig.getFeignMoviesByQuery(naverProperties.getClientId(), naverProperties.getClientSecret(), query);
+        return feignMovieRepository.saveCacheByQuery(moviesByQuery, query);
     }
 
     /**
@@ -60,7 +72,8 @@ public class MovieService {
         if(StringUtils.isEmpty(query)){
             throw new InvalidRequestException(ExceptionMessage.INVALID_REQUEST_QUERY_EMPTY_EXCEPTION);
         }
-        return movieRepository.findByOrderQuery(query).getItems().stream()
+        Movie.MovieDto moviesByQuery = feignClientConfig.getFeignMoviesByQuery(naverProperties.getClientId(), naverProperties.getClientSecret(), query);
+        return feignMovieRepository.findByOrderQuery(moviesByQuery,query).getItems().stream()
                 .filter(b->!((Float)b.getUserRating()).equals(0.0f))
                 .sorted((a,b) -> b.getUserRating() > a.getUserRating() ? 1 : -1)
                 .collect(Collectors.toList());
@@ -90,21 +103,7 @@ public class MovieService {
      * @return
      */
     private Movie.MovieDto findByQueryImpl(String query) {
-        return movieRepository.findByQuery(query);
+        Movie.MovieDto moviesByQuery = feignClientConfig.getFeignMoviesByQuery(naverProperties.getClientId(), naverProperties.getClientSecret(), query);
+        return feignMovieRepository.findByQuery(moviesByQuery, query);
     }
-
-    /**
-     * 로컬 임시 테스트 로직
-     * @param query
-     * @return
-     */
-    /*
-    public List<Movie> query(final String query){
-        return Arrays.asList(
-                Movie.builder().title("Movie-1").link("http://link").build(),
-                Movie.builder().title("Movie-2").link("http://link").build()
-                );
-    }
-     */
-
 }
