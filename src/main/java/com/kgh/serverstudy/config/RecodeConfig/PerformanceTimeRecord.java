@@ -1,4 +1,4 @@
-package com.kgh.serverstudy.config;
+package com.kgh.serverstudy.config.RecodeConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

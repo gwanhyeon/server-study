@@ -19,10 +19,10 @@ public class SearchController {
     private final NewsService newsService;
 
     // Cache추상화 미적용
-    @GetMapping("/movies/cache-none-abstraction")
-    public List<Movie> getMoviesNoneAbstraction(@RequestParam(name = "q") String query){
-        return movieService.search(query);
-    }
+//    @GetMapping("/movies/cache-none-abstraction")
+//    public List<Movie> getMoviesNoneAbstraction(@RequestParam(name = "q") String query){
+//        return movieService.search(query);
+//    }
 
     @GetMapping("/movies")
     public Movie.MovieDto getMoviesByQuery(@RequestParam(name = "q") String query){

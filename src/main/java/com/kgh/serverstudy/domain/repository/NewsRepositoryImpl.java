@@ -1,6 +1,6 @@
 package com.kgh.serverstudy.domain.repository;
 
-import com.kgh.serverstudy.config.NaverProperties;
+import com.kgh.serverstudy.config.NaverConfig.NaverProperties;
 import com.kgh.serverstudy.domain.dto.News;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

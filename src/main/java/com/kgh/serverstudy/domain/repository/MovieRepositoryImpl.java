@@ -2,7 +2,7 @@ package com.kgh.serverstudy.domain.repository;
 
 import com.kgh.serverstudy.Exception.ExceptionMessage;
 import com.kgh.serverstudy.Exception.OpenApiRuntimeException;
-import com.kgh.serverstudy.config.NaverProperties;
+import com.kgh.serverstudy.config.NaverConfig.NaverProperties;
 import com.kgh.serverstudy.domain.dto.MovieGroup;
 import com.kgh.serverstudy.domain.dto.Movie;
 import org.springframework.http.HttpEntity;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
