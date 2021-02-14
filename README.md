@@ -1,5 +1,5 @@
 # 🔥SpringBoot Server Study🔥 
-## 1주 차 - 스프링부트 개념 NAVER OPEN API 서버 연동
+## 1주 차 - 스프링부트 개념 OPEN API 서버 연동
 
 ### 1. 스프링부트 개념 및 환경 설정
 - SpringBoot 2.4.2 Gradle 및 서버 환경 설정
@@ -48,10 +48,14 @@
 [Redis 설치 및 명령어 정리](https://gwanhyeon.github.io/Database-20210131-redis-install-command/)
 - Redis 캐시 추상화 적용
 ### 8. 스프링 캐시 추상화, Redis 연동하기
+- 스프링 캐시 추상화 적용
+- 스프링 AOP 적용
+- Redis 연동(검색 결과 캐싱 처리 및 삭제)
 --- 
 ## 5주 차 - EventListener, MQ, Pub/Sub
 ### 10. EventListener, MQ, Pub/Sub 기본 개념
-### 11. RabbiMQ, KAFKA 사용해보기
+### 11. RabbiMQ, Kafka 사용해보기
+- AMQP(Advanced Message Queuing Protocol) 오픈소스 적용(RabbitMQ, Kafka)
 --- 
 ## 6주차 - Spring Security 보안(인증)
 --- 
