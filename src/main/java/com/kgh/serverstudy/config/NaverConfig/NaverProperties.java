@@ -1,4 +1,4 @@
-package com.kgh.serverstudy.config;
+package com.kgh.serverstudy.config.NaverConfig;
 
 import lombok.Getter;
 import lombok.Setter;

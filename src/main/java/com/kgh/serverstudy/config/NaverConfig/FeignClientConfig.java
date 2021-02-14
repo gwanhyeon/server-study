@@ -1,4 +1,4 @@
-package com.kgh.serverstudy.config;
+package com.kgh.serverstudy.config.NaverConfig;
 
 import com.kgh.serverstudy.Exception.ExceptionMessage;
 import com.kgh.serverstudy.domain.dto.Movie;

@@ -1,4 +1,4 @@
-package com.kgh.serverstudy.config;
+package com.kgh.serverstudy.config.NaverConfig;
 
 import lombok.*;
 import org.apache.http.client.HttpClient;

@@ -4,6 +4,10 @@ resttemplate:
         maxconnperroute: 10
         conntimeout: 3000
         readtimeout: 5000
+spring:
+    redis:
+        host: localhost
+        post: 6379
 # Tomcat Thread max size config
 # server:
 #    tomcat:

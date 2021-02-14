@@ -2,14 +2,15 @@ package com.kgh.serverstudy.service;
 
 import com.kgh.serverstudy.Exception.ExceptionMessage;
 import com.kgh.serverstudy.Exception.InvalidRequestException;
-import com.kgh.serverstudy.config.FeignClientConfig;
-import com.kgh.serverstudy.config.NaverProperties;
+import com.kgh.serverstudy.config.NaverConfig.FeignClientConfig;
+import com.kgh.serverstudy.config.NaverConfig.NaverProperties;
 import com.kgh.serverstudy.domain.dto.Movie;
 import com.kgh.serverstudy.domain.dto.MovieGroup;
 import com.kgh.serverstudy.domain.repository.Feign.FeignMovieRepository;
-import com.kgh.serverstudy.domain.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -48,6 +49,17 @@ public class FeignMovieService {
         }
         Movie.MovieDto moviesByQuery = feignClientConfig.getFeignMoviesByQuery(naverProperties.getClientId(), naverProperties.getClientSecret(), query);
         return feignMovieRepository.findCacheByQuery(moviesByQuery, query);
+    }
+
+    /**
+     * 영화 데이터 조회(캐시 추상화 - 레디스)
+     * @param query
+     * @return
+     */
+    @Cacheable(value = "cache::movie::query")
+    public Map<String, Movie.MovieDto> findCacheRedisByQuery(final String query){
+        Movie.MovieDto moviesByQuery = feignClientConfig.getFeignMoviesByQuery(naverProperties.getClientId(), naverProperties.getClientSecret(), query);
+        return feignMovieRepository.findCacheRedisByQuery(moviesByQuery, query);
     }
 
     /**
