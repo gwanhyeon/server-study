@@ -5,6 +5,7 @@ import com.kgh.serverstudy.Exception.InvalidRequestException;
 import com.kgh.serverstudy.domain.dto.MovieGroup;
 import com.kgh.serverstudy.domain.dto.Movie;
 import com.kgh.serverstudy.domain.repository.MovieRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -31,7 +32,7 @@ public class MovieService {
      * @param query
      * @return
      */
-
+    @Cacheable(value = "cache::movie::query")
     public Map<String, Movie.MovieDto> findCacheByQuery(final String query){
         if(StringUtils.isEmpty(query)){
             throw new InvalidRequestException(ExceptionMessage.INVALID_REQUEST_QUERY_EMPTY_EXCEPTION);

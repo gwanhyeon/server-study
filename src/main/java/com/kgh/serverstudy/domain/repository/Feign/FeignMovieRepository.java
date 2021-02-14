@@ -8,5 +8,6 @@ public interface FeignMovieRepository {
     Movie.MovieDto findByOrderQuery(Movie.MovieDto exchange, String query);
     Map<String, Movie.MovieDto> saveCacheByQuery(Movie.MovieDto exchange, String query);
     Map<String, Movie.MovieDto> findCacheByQuery(Movie.MovieDto exchange, String query);
+    Map<String, Movie.MovieDto> findCacheRedisByQuery(Movie.MovieDto exchange, String query);
     void cacheInitialized();
 }

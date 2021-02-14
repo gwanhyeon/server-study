@@ -1,5 +1,5 @@
 package com.kgh.serverstudy.service;
-import com.kgh.serverstudy.config.NaverProperties;
+import com.kgh.serverstudy.config.NaverConfig.NaverProperties;
 import com.kgh.serverstudy.domain.dto.Movie;
 import com.kgh.serverstudy.domain.repository.MovieRepository;
 import com.kgh.serverstudy.domain.repository.MovieRepositoryImpl;
